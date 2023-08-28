@@ -16,7 +16,7 @@ export class PublicationsRepository {
     async getPublicationById(id: number) {
         return await this.prisma.publications.findUnique({ where: { id } })
     }
-
+    
     async deletePublicationById(id: number) {
         return await this.prisma.publications.delete({ where: { id } })
     }

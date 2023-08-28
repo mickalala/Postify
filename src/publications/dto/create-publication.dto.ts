@@ -9,6 +9,6 @@ export class CreatePublicationsDto {
     @IsNotEmpty()
     postId: number;
 
-    @IsDate()
+    @IsNotEmpty()
     date: string;
 }
