@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePublicationDto } from './dto/create-publication.dto';
+import { CreatePublicationsDto } from './dto/create-publication.dto';
 import { UpdatePublicationDto } from './dto/update-publication.dto';
 
 @Injectable()
 export class PublicationsService {
-  create(createPublicationDto: CreatePublicationDto) {
+  create(createPublicationDto: CreatePublicationsDto) {
     return 'This action adds a new publication';
   }
 

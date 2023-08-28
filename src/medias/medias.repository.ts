@@ -14,11 +14,11 @@ export class MediasRepository {
     }
 
     async getMediaById(id: number) {
-        return await this.prisma.medias.findUnique({ where: { id } })
+        return await this.prisma.medias.findUnique({ where: { id: id } })
     }
 
     async deleteMediaById(id: number) {
         return await this.prisma.medias.delete({ where: { id } })
     }
-    
+
 }
