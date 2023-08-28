@@ -24,8 +24,8 @@ export class MediasController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMediaDto: UpdateMediaDto) {
-    return this.mediasService.update(+id, updateMediaDto);
+  update(@Param('id') id: string, @Body() data: CreateMediaDto) {
+    return this.mediasService.update(+id, data);
   }
 
   @Delete(':id')

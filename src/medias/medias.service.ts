@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { ConflictException, HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMediaDto } from './dto/create-media.dto';
 import { UpdateMediaDto } from './dto/update-media.dto';
 import { MediasRepository } from './medias.repository';
@@ -8,6 +8,7 @@ export class MediasService {
   constructor(private readonly mediaRepository: MediasRepository) { }
 
   async create(data: CreateMediaDto) {
+    await this.combinationExists(data)
     return await this.mediaRepository.createmedia(data)
   }
 
@@ -17,15 +18,24 @@ export class MediasService {
 
   async findOne(id: number) {
     const media = await this.mediaRepository.getMediaById(id);
-    if (!media) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    if (!media) throw new NotFoundException();
     return media;
   }
 
-  update(id: number, updateMediaDto: UpdateMediaDto) {
-    return `This action updates a #${id} media`;
+  async update(id: number, data: CreateMediaDto) {
+    const media = await this.mediaRepository.getMediaById(id);
+    if (!media) throw new NotFoundException();
+    await this.combinationExists(data);
+    const updatedMedia = await this.mediaRepository.update(id, data);
+    return updatedMedia;
   }
 
   async remove(id: number) {
     return await this.mediaRepository.deleteMediaById(id);
+  }
+
+  async combinationExists(data: CreateMediaDto) {
+    const combination = await this.mediaRepository.getCombination(data);
+    if (combination) throw new ConflictException;
   }
 }
